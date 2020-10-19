@@ -48,7 +48,7 @@
       "@vue/prettier/@typescript-eslint"
     ],
     "parserOptions": {
-      "ecmaVersion": 2020
+      "ecmaVersion": 2019
     },
     "rules": {}
   },
