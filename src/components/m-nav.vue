@@ -1,48 +1,33 @@
 <template>
-  <div class="nav">
+  <div class="m-nav">
     <ul>
       <li>
-        <router-link
-          to="/home"
-          activeClassName="selected"
-        >
-          <Icon name="home"></Icon>
+        <router-link to="/home">
+          <m-icon name="home"></m-icon>
           首页
         </router-link>
       </li>
       <li>
-        <router-link
-          to="/detail"
-          activeClassName="selected"
-        >
-          <Icon name="details"></Icon>
+        <router-link to="/details">
+          <m-icon name="details"></m-icon>
           明细
         </router-link>
       </li>
       <li>
-        <router-link
-          to="/money"
-          activeClassName="selected"
-        >
-          <Icon name="add_money"></Icon>
+        <router-link to="/money">
+          <m-icon name="add_money"></m-icon>
           记账
         </router-link>
       </li>
       <li>
-        <router-link
-          to="/tags"
-          activeClassName="selected"
-        >
-          <Icon name="tag"></Icon>
+        <router-link to="/tags">
+          <m-icon name="tag"></m-icon>
           标签
         </router-link>
       </li>
       <li>
-        <router-link
-          to="/statistics"
-          activeClassName="selected"
-        >
-          <Icon name="statistics"></Icon>
+        <router-link to="/statistics">
+          <m-icon name="statistics"></m-icon>
           图表
         </router-link>
       </li>
@@ -52,14 +37,20 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator"
-@Component
-export default class Nav extends Vue { }
+import MIcon from '@/base/m-icon.vue'
+
+@Component({
+  components: {
+    MIcon
+  }
+})
+export default class MNav extends Vue { }
 </script>
 
 <style lang="stylus" scoped>
 @import '~@/common/stylus/variable.styl'
 
-.nav
+.m-nav
   background-color #fff
 
 ul
@@ -79,18 +70,11 @@ ul
       color rgba(0, 0, 0, 0.3)
       font-size 12px
 
-      svg
-        width 2em
-        height 2em
-
-      .icon
-        margin-bottom 5px
-
       &.router-link-active
         background-color $theme.bc
         color $theme.color
         font-weight 600
 
-        svg
-          fill $theme.bc
+        >>>.svg-wrapper svg
+          fill $theme.color
 </style>

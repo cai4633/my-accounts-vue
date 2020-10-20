@@ -1,7 +1,6 @@
 @import './variable.styl'
 
 $timeout = 200ms
-$max-width = 768px
 
 html
   font-size 16px
@@ -16,9 +15,9 @@ body
   -moz-osx-font-smoothing grayscale
   font-size 14px
 
-  #root
+  #app
     margin 0 auto
-    max-width @max-width
+    max-width $theme.maxWidth
     min-width 265px
     height 100%
 
@@ -40,21 +39,21 @@ code
 .fade-enter-active
   opacity 1
   transform translateY(0%)
-  transition all @timeout ease-out
+  transition all $timeout ease-out
 
 .fade-exit
   opacity 1
 
 .fade-exit-active
   opacity 0
-  transition all @timeout ease-in
+  transition all $timeout ease-in
 
 .fade-appear
   transform translateY(100%)
 
 .fade-appear-active
   transform translateY(0%)
-  transition all @timeout linear
+  transition all $timeout linear
 
 .no-pointer
   pointer-events none
