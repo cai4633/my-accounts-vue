@@ -17,18 +17,12 @@
           >
             <m-record-item
               :allTags="allTags"
-              v-for="id in record.selected"
-              :key="id"
-              :id='id'
+              :item='record'
             ></m-record-item>
-            <span class="note no-wrap">{{record.note}}</span>
-            <span class="amount">
-              {{record.category}}
-              {{record.output}}
-            </span>
           </li>
         </ul>
       </div>
+
     </section>
   </m-layout>
 </template>
@@ -44,7 +38,6 @@ import { findTags } from '@/common/ts/tags'
 import { getAllTags } from '@/api/tags'
 import MRecordItem from '@/components/m-record-item.vue'
 import { getDataToday } from '@/common/ts/detail'
-
 @Component({
   components: {
     MLayout,
@@ -56,6 +49,7 @@ export default class Home extends Vue {
   @Provide() today = dayjs().format('YYYY年MM月DD日')
   @Provide() allRecords: myTypes.RecordItem[] = []
   @Provide() allTags: myTypes.TagItem[] = []
+
 
 
   get records() {
