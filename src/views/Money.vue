@@ -1,5 +1,7 @@
 <template>
-  <m-layout class="home">1111</m-layout>
+  <m-layout class="home">
+    
+  </m-layout>
 </template>
 
 <script lang='ts'>

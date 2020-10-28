@@ -38,6 +38,8 @@ import { findTags } from '@/common/ts/tags'
 import { getAllTags } from '@/api/tags'
 import MRecordItem from '@/components/m-record-item.vue'
 import { getDataToday } from '@/common/ts/detail'
+import { Mutation } from 'vuex-class';
+import { MutationMethod } from 'vuex';
 @Component({
   components: {
     MLayout,
@@ -49,8 +51,7 @@ export default class Home extends Vue {
   @Provide() today = dayjs().format('YYYY年MM月DD日')
   @Provide() allRecords: myTypes.RecordItem[] = []
   @Provide() allTags: myTypes.TagItem[] = []
-
-
+  @Mutation("setAllTags") setAllTags!: MutationMethod
 
   get records() {
     return getDataToday(this.allRecords).records
@@ -62,9 +63,9 @@ export default class Home extends Vue {
     })
     getAllTags().then((res) => {
       this.allTags = res
+      this.setAllTags(res)
     })
   }
-
 }
 </script>
 

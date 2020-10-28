@@ -1,7 +1,7 @@
 <template>
   <span :class="['svg-wrapper',className]">
     <svg
-      className="icon"
+      class="icon"
       aria-hidden="true"
       :style="{fill: fill }"
     >
@@ -29,5 +29,4 @@ svg
 
 .icon
   margin-bottom 5px
-  border 1px solid #000
 </style>

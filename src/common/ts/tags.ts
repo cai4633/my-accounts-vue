@@ -1,6 +1,3 @@
-import { getAllTags } from "@/api/tags"
-import { getComplementarySet, getIds } from "./util"
-
 interface Classify<T = myTypes.TagItem> {
   income: T[]
   outcome: T[]
@@ -56,4 +53,4 @@ const updateTag = (id: number, newTag: string) => {
 //   setTags([...tags, ...findTags(val)])
 // }
 
-export { updateTag, findTagId, findTags }
+export { updateTag, findTagId, findTags, classifyByCategory }

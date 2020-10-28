@@ -1,6 +1,6 @@
 import Vue from "vue"
 import VueRouter, { RouteConfig } from "vue-router"
-
+import Item from "../views/TagItem.vue"
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
@@ -27,6 +27,13 @@ const routes: Array<RouteConfig> = [
     path: "/tags",
     name: "Tags",
     component: () => import("../views/Tags.vue"),
+    children: [
+      {
+        path: ":id",
+        name: "TagItem",
+        component: () => import("../views/TagItem.vue"),
+      },
+    ],
   },
   {
     path: "/details",

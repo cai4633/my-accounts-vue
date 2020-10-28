@@ -4,7 +4,10 @@
   </div>
 </template>
 
+
+
 <style lang="stylus">
+// TODO: app.vue生命周期钩子无效
 #app
   font-family Avenir, Helvetica, Arial, sans-serif
   -webkit-font-smoothing antialiased
