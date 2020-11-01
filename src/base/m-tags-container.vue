@@ -2,6 +2,7 @@
   <div class='m-tags-container'>
     <ol>
       <li
+        v-show="!tag.deleted"
         v-for="tag in tags"
         :key='tag.id'
         @click='gotoTagItem(tag.id)'

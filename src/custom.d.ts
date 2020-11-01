@@ -20,6 +20,7 @@ declare namespace myTypes {
     name: string
     category: Categories
     icon: string
+    deleted: boolean
   }
 
   interface PropType {
@@ -59,7 +60,7 @@ declare namespace myTypes {
   }
 
   interface ActionType {
-    type: "addNew" | "updateAll" | "addAll" | 'deleteOne'
+    type: "addNew" | "updateAll" | "addAll" | "deleteOne"
     data: myTypes.RecordItem | myTypes.RecordItem[]
   }
 }

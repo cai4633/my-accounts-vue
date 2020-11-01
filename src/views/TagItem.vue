@@ -15,12 +15,12 @@
         >标签不存在或者已删除
         </span>
       </main>
-      <!-- <div class="button-wrapper">
-        <Button
-          title={tagMap.value}
-          onClick={tagMap.clickHandle}
-        ></Button>
-      </div> -->
+      <div class="button-wrapper">
+        <m-button
+          title='删除标签'
+          @btnclick='deleteTag'
+        ></m-button>
+      </div>
     </m-layout>
   </div>
 </template>
@@ -34,10 +34,10 @@ import { Getter, Mutation } from 'vuex-class'
 import { getAllTags, updateTag } from '@/api/tags';
 import { MutationMethod } from 'vuex';
 import MNote from 'base/m-note.vue'
-
+import MButton from 'base/m-button.vue'
 @Component({
   components: {
-    MLayout, MHeader, MNote
+    MLayout, MHeader, MNote, MButton
   }
 })
 export default class TagItem extends Vue {
@@ -56,15 +56,27 @@ export default class TagItem extends Vue {
     if (!this.tagname) {
       this.tagname = this.tag.name
     }
-    updateTag(this.id, this.tagname).then((res) => {
-      // TODO: 通过vuex改变状态后 back路由 页面不刷新
-      this.setAllTags(updateLocalTag(res, this.allTags))
-      this.$router.go(-1)
-    })
+    this._updateTag({ name: this.tagname })
   }
   onchange(value: string) {
     this.tagname = value
   }
+  deleteTag() {
+    console.log(this.tag);
+    this._updateTag({ deleted: true })
+  }
+
+  // 抽象更新tag函数
+  _updateTag(item: Partial<myTypes.TagItem>) {
+    updateTag(this.id, item).then((res) => {
+      // TODO: 通过vuex改变状态后 back路由 页面不刷新
+      console.log(res);
+
+      this.setAllTags(updateLocalTag(res, this.allTags))
+      this.$router.go(-1)
+    })
+  }
+
   mounted() {
     if (!this.allTags.length) {
       getAllTags().then((res) => {

@@ -30,7 +30,7 @@ const findTags = (ids: number[], allTags: myTypes.TagItem[]): myTypes.TagItem[] 
 
 // 更新标签
 const updateLocalTag = (newTag: myTypes.TagItem, tags: myTypes.TagItem[]) =>
-  tags.slice().map((tag) => (tag.id === newTag.id ? { ...tag, name: newTag.name } : tag))
+  tags.slice().map((tag) => (tag.id === newTag.id ? { ...tag, name: newTag.name, deleted: newTag.deleted } : tag))
 
 // 删除标签
 // const deleteTag = (id: number) => {

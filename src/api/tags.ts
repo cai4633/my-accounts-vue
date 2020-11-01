@@ -24,13 +24,16 @@ function getAllTags(): Promise<myTypes.TagItem[]> {
   return query.find().then((todo: any) => todo.map((item: { attributes: myTypes.TagItem }) => item.attributes))
 }
 
-function updateTag(id: number, tagname: string): Promise<myTypes.TagItem> {
+function updateTag(id: number, item: Partial<myTypes.TagItem>): Promise<myTypes.TagItem> {
   const query = new Query("tags")
   return query
     .equalTo("id", id)
     .first()
     .then((tag) => {
-      tag?.set("name", tagname)
+      let key: keyof typeof item
+      for (key in item) {
+        tag?.set(key, item[key])
+      }
       tag?.save()
       return tag?.toJSON()
     })
