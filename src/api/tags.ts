@@ -1,3 +1,4 @@
+import { Avatar } from "ant-design-vue"
 import { AV, Query } from "./index"
 
 // 向leancloud 添加标签
@@ -23,5 +24,16 @@ function getAllTags(): Promise<myTypes.TagItem[]> {
   return query.find().then((todo: any) => todo.map((item: { attributes: myTypes.TagItem }) => item.attributes))
 }
 
-export { addTags, getAllTags }
+function updateTag(id: number, tagname: string): Promise<myTypes.TagItem> {
+  const query = new Query("tags")
+  return query
+    .equalTo("id", id)
+    .first()
+    .then((tag) => {
+      tag?.set("name", tagname)
+      tag?.save()
+      return tag?.toJSON()
+    })
+}
 
+export { addTags, updateTag, getAllTags }

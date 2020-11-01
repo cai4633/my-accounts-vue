@@ -19,6 +19,8 @@ import MTagsContainer from '@/base/m-tags-container.vue'
 import { Component, Prop, Provide, Vue, Watch } from 'vue-property-decorator';
 import { getAllTags } from '@/api/tags';
 import { classifyByCategory } from 'common/ts/tags';
+import { Getter, Mutation } from 'vuex-class';
+import { MutationMethod } from 'vuex';
 
 interface Classify<T = myTypes.TagItem> {
   income: T[]
@@ -30,13 +32,14 @@ interface Classify<T = myTypes.TagItem> {
     MLayout,
     MCategoryHeader,
     MTagsContainer
-  }
+  },
 })
 
 export default class Tags extends Vue {
-  @Provide() category: keyof Tags["hash"] = '+'
+  @Provide() category: keyof Tags["hash"] = '-'
   @Provide() hash: { [key: string]: 'income' | 'outcome' } = { "+": "income", "-": "outcome" }
-  @Provide() allTags: myTypes.TagItem[] = []
+  @Getter('allTags') allTags !: myTypes.TagItem[]
+  @Mutation('setAllTags') setAllTags!: MutationMethod
 
   toggleBtn(value: Tags['category']) {
     this.category = value
@@ -47,9 +50,11 @@ export default class Tags extends Vue {
   }
 
   mounted() {
-    getAllTags().then((res) => {
-      this.allTags = res
-    })
+    if (!this.allTags.length) {
+      getAllTags().then((res) => {
+        this.setAllTags(res)
+      })
+    }
   }
 }
 </script>

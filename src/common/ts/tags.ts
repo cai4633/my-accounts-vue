@@ -29,13 +29,8 @@ const findTags = (ids: number[], allTags: myTypes.TagItem[]): myTypes.TagItem[] 
 }
 
 // 更新标签
-const updateTag = (id: number, newTag: string) => {
-  // const copy = tags.slice()
-  // const ret = copy.map((tag) => {
-  //   return tag.id === id ? { ...tag, name: newTag } : tag
-  // })
-  // setTags(ret)
-}
+const updateLocalTag = (newTag: myTypes.TagItem, tags: myTypes.TagItem[]) =>
+  tags.slice().map((tag) => (tag.id === newTag.id ? { ...tag, name: newTag.name } : tag))
 
 // 删除标签
 // const deleteTag = (id: number) => {
@@ -53,4 +48,4 @@ const updateTag = (id: number, newTag: string) => {
 //   setTags([...tags, ...findTags(val)])
 // }
 
-export { updateTag, findTagId, findTags, classifyByCategory }
+export { updateLocalTag, findTagId, findTags, classifyByCategory }
