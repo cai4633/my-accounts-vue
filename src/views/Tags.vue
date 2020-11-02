@@ -57,20 +57,28 @@ export default class Tags extends Vue {
 
   onaddtags() {
     this.$router.push({
-      name: 'addtags',
+      name: 'add',
       params: {
         classify: JSON.stringify(this.classify)
       }
     })
-
   }
 
+  updated() {
+    console.log(111);
+    console.log(this.allTags);
+    console.log(this.classify);
+    
+    
+
+  }
   mounted() {
     if (!this.allTags.length) {
       getAllTags().then((res) => {
         this.setAllTags(res)
       })
     }
+
   }
 }
 </script>

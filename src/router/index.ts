@@ -8,21 +8,25 @@ const routes: Array<RouteConfig> = [
     path: "/",
     redirect: "/home",
   },
+
   {
     path: "/home",
     name: "Home",
     component: () => import("../views/Home.vue"),
   },
+
   {
     path: "/money",
     name: "Money",
     component: () => import("../views/Money.vue"),
   },
+
   {
     path: "/statistics",
     name: "Statistics",
     component: () => import("../views/Statistics.vue"),
   },
+
   {
     path: "/tags",
     name: "Tags",
@@ -33,13 +37,14 @@ const routes: Array<RouteConfig> = [
         name: "TagItem",
         component: () => import("../views/TagItem.vue"),
       },
+      {
+        path: "add",
+        name: "add",
+        component: () => import("../views/AddTags.vue"),
+      },
     ],
   },
-  {
-    path: "/addtags",
-    name: "addtags",
-    component: () => import("../views/AddTags.vue"),
-  },
+
   {
     path: "/details",
     name: "Details",

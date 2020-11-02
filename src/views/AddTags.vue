@@ -45,7 +45,7 @@ export default class AddTags extends Vue {
   _updateTag(item: Partial<myTypes.TagItem>) {
     updateTag(this.selected, item).then((res) => {
       this.setAllTags(updateLocalTag(res, this.allTags))
-      this.$router.go(-1)
+      this.$router.push({ name: 'Tags', params: { category: '+' } })
     })
   }
 
@@ -61,4 +61,8 @@ export default class AddTags extends Vue {
 <style lang='stylus' scoped>
 .addTags
   height 100%
+  position absolute
+  top 0 
+  left 0
+  width 100%
 </style>
