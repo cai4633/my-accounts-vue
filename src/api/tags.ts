@@ -24,18 +24,33 @@ function getAllTags(): Promise<myTypes.TagItem[]> {
   return query.find().then((todo: any) => todo.map((item: { attributes: myTypes.TagItem }) => item.attributes))
 }
 
-function updateTag(id: number, item: Partial<myTypes.TagItem>): Promise<myTypes.TagItem> {
+function updateTag(id: number | number[], item: Partial<myTypes.TagItem>): Promise<myTypes.TagItem | myTypes.TagItem[]> {
   const query = new Query("tags")
+  if (typeof id === "number") {
+    return query
+      .equalTo("id", id)
+      .first()
+      .then((tag) => {
+        let key: keyof typeof item
+        for (key in item) {
+          tag?.set(key, item[key])
+        }
+        tag?.save()
+        return tag?.toJSON()
+      })
+  }
   return query
-    .equalTo("id", id)
-    .first()
-    .then((tag) => {
-      let key: keyof typeof item
-      for (key in item) {
-        tag?.set(key, item[key])
-      }
-      tag?.save()
-      return tag?.toJSON()
+    .containedIn("id", id)
+    .find()
+    .then((tags) => {
+      return tags.map((tag) => {
+        let key: keyof typeof item
+        for (key in item) {
+          tag?.set(key, item[key])
+        }
+        tag?.save()
+        return tag?.toJSON()
+      })
     })
 }
 

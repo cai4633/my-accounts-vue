@@ -6,6 +6,8 @@
     ></m-category-header>
     <MTagsContainer
       hasAddBtn='true'
+      @selected='gotoTagItem'
+      @addtags='onaddtags'
       :tags='classify'
     ></MTagsContainer>
     <router-view></router-view>
@@ -47,6 +49,20 @@ export default class Tags extends Vue {
 
   get classify(): myTypes.TagItem[] {
     return classifyByCategory(this.allTags)[this.hash[this.category]]
+  }
+
+  gotoTagItem(id: number) {
+    this.$router.push(`/tags/${id}`)
+  }
+
+  onaddtags() {
+    this.$router.push({
+      name: 'addtags',
+      params: {
+        classify: JSON.stringify(this.classify)
+      }
+    })
+
   }
 
   mounted() {

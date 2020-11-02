@@ -62,7 +62,6 @@ export default class TagItem extends Vue {
     this.tagname = value
   }
   deleteTag() {
-    console.log(this.tag);
     this._updateTag({ deleted: true })
   }
 
@@ -70,8 +69,6 @@ export default class TagItem extends Vue {
   _updateTag(item: Partial<myTypes.TagItem>) {
     updateTag(this.id, item).then((res) => {
       // TODO: 通过vuex改变状态后 back路由 页面不刷新
-      console.log(res);
-
       this.setAllTags(updateLocalTag(res, this.allTags))
       this.$router.go(-1)
     })

@@ -29,8 +29,15 @@ const findTags = (ids: number[], allTags: myTypes.TagItem[]): myTypes.TagItem[] 
 }
 
 // 更新标签
-const updateLocalTag = (newTag: myTypes.TagItem, tags: myTypes.TagItem[]) =>
-  tags.slice().map((tag) => (tag.id === newTag.id ? { ...tag, name: newTag.name, deleted: newTag.deleted } : tag))
+const updateLocalTag = (newTag: myTypes.TagItem | myTypes.TagItem[], tags: myTypes.TagItem[]) => {
+  if (Array.isArray(newTag)) {
+    return tags.map((tag) => {
+      const item = newTag.filter((item) => item.id === tag.id)[0]
+      return !item ? tag : { ...tag, name: item.name, deleted: item.deleted }
+    })
+  }
+  return tags.map((tag) => (tag.id === newTag.id ? { ...tag, name: newTag.name, deleted: newTag.deleted } : tag))
+}
 
 // 删除标签
 // const deleteTag = (id: number) => {

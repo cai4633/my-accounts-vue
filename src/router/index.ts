@@ -36,6 +36,11 @@ const routes: Array<RouteConfig> = [
     ],
   },
   {
+    path: "/addtags",
+    name: "addtags",
+    component: () => import("../views/AddTags.vue"),
+  },
+  {
     path: "/details",
     name: "Details",
     component: () => import("../views/Details.vue"),

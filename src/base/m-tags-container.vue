@@ -2,18 +2,21 @@
   <div class='m-tags-container'>
     <ol>
       <li
-        v-show="!tag.deleted"
+        v-show="hasAddBtn ? !tag.deleted : tag.deleted"
         v-for="tag in tags"
         :key='tag.id'
-        @click='gotoTagItem(tag.id)'
+        @click='onselected(tag.id)'
       >
-        <div class="item">
+        <div :class="{'item':true, 'checked':selected.includes(tag.id)}">
           <m-icon :name="tag.icon"></m-icon>
           <span class="name">{{tag.name}}</span>
         </div>
       </li>
       <li v-if="hasAddBtn">
-        <div class="item">
+        <div
+          class="item"
+          @click.stop="gotoAddTags"
+        >
           <m-icon name="add"></m-icon>
           <span class="name">添加</span>
         </div>
@@ -38,17 +41,21 @@ import { Component, Prop, Provide, Vue, Watch } from 'vue-property-decorator';
 })
 export default class MTagsContainer extends Vue {
   @Provide() empty: number[] = []
-  @Prop({ default: [] }) tags!: myTypes.TagItem[]
+  @Prop({ default: () => [] }) tags!: myTypes.TagItem[]
   @Prop({ default: true }) hasAddBtn!: boolean
+  @Prop({ default: () => [] }) selected!: number[]
 
-  gotoTagItem(id: number) {
-    this.$router.push(`/tags/${id}`)
+  onselected(id: number) {
+    this.$emit('selected', id)
   }
-  
+  gotoAddTags() {
+    this.$emit('addtags')
+  }
+
   mounted() {
     // 空元素
     for (let i = 1; i <= 8; i++) {
-      this.empty.push(Math.random() * 1000 | 0)
+      this.empty.push(10000 + i)
     }
   }
 }
@@ -93,7 +100,7 @@ export default class MTagsContainer extends Vue {
           border 1px solid transparent
 
       .checked
-        svg.icon
+        >>>svg.icon
           border 1px solid red
 
       .selected
