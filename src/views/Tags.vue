@@ -18,11 +18,12 @@
 import MLayout from '@/base/m-layout.vue'
 import MCategoryHeader from '@/base/m-category-header.vue'
 import MTagsContainer from '@/base/m-tags-container.vue'
-import { Component, Prop, Provide, Vue, Watch } from 'vue-property-decorator';
+import { Component, Mixins, Prop, Provide, Vue, Watch } from 'vue-property-decorator';
 import { getAllTags } from '@/api/tags';
 import { classifyByCategory } from 'common/ts/tags';
 import { Getter, Mutation } from 'vuex-class';
 import { MutationMethod } from 'vuex';
+import { TagMixin } from 'common/ts/mixins'
 
 interface Classify<T = myTypes.TagItem> {
   income: T[]
@@ -37,18 +38,9 @@ interface Classify<T = myTypes.TagItem> {
   },
 })
 
-export default class Tags extends Vue {
-  @Provide() category: keyof Tags["hash"] = '-'
-  @Provide() hash: { [key: string]: 'income' | 'outcome' } = { "+": "income", "-": "outcome" }
-  @Getter('allTags') allTags !: myTypes.TagItem[]
-  @Mutation('setAllTags') setAllTags!: MutationMethod
-
+export default class Tags extends Mixins(TagMixin) {
   toggleBtn(value: Tags['category']) {
     this.category = value
-  }
-
-  get classify(): myTypes.TagItem[] {
-    return classifyByCategory(this.allTags)[this.hash[this.category]]
   }
 
   gotoTagItem(id: number) {
@@ -64,14 +56,6 @@ export default class Tags extends Vue {
     })
   }
 
-  updated() {
-    console.log(111);
-    console.log(this.allTags);
-    console.log(this.classify);
-    
-    
-
-  }
   mounted() {
     if (!this.allTags.length) {
       getAllTags().then((res) => {

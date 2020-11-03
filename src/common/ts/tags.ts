@@ -6,7 +6,7 @@ interface Classify<T = myTypes.TagItem> {
 const __TAGS__ = "tags"
 
 // 根据category将将标签分类
-function classifyByCategory<T extends { category: myTypes.Categories }>(tags: T[]) {
+function classifyByCategory<T extends myTypes.TagItem>(tags: T[]) {
   const income: T[] = []
   const outcome: T[] = []
   tags.forEach((tag) => {

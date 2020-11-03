@@ -13,7 +13,7 @@
 </template>
 
 <script lang='ts'>
-import { Component, Prop, Provide, Vue, Watch } from 'vue-property-decorator';
+import { Component, Mixins, Prop, Provide, Vue, Watch } from 'vue-property-decorator';
 import MLayout from 'base/m-layout.vue'
 import MHeader from 'base/m-header.vue'
 import MTagsContainer from 'base/m-tags-container.vue'
@@ -21,15 +21,12 @@ import { updateTag } from '@/api/tags';
 import { updateLocalTag } from '@/common/ts/tags';
 import { Getter, Mutation } from 'vuex-class';
 import { MutationMethod } from 'vuex';
+import { TagMixin } from 'common/ts/mixins'
 @Component({
   components: { MLayout, MHeader, MTagsContainer }
 })
-export default class AddTags extends Vue {
-  @Provide() classify: myTypes.TagItem[] = []
+export default class AddTags extends Mixins(TagMixin) {
   @Provide() selected: number[] = []
-  @Getter("allTags") allTags!: myTypes.TagItem[]
-  @Mutation('setAllTags') setAllTags!: MutationMethod
-
   onok() {
     this._updateTag({ deleted: false })
   }
@@ -49,12 +46,6 @@ export default class AddTags extends Vue {
     })
   }
 
-
-  mounted() {
-    if (this.$route.params.classify) {
-      this.classify = JSON.parse(this.$route.params.classify)
-    }
-  }
 }
 </script>
 
@@ -62,7 +53,7 @@ export default class AddTags extends Vue {
 .addTags
   height 100%
   position absolute
-  top 0 
+  top 0
   left 0
   width 100%
 </style>
