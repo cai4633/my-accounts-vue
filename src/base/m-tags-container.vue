@@ -2,7 +2,7 @@
   <div class='m-tags-container'>
     <ol>
       <li
-        v-show="hasAddBtn ? !tag.deleted : tag.deleted"
+        v-show="tagVisiable ? !tag.deleted : tag.deleted"
         v-for="tag in tags"
         :key='tag.id'
         @click='onselected(tag.id)'
@@ -43,6 +43,7 @@ export default class MTagsContainer extends Vue {
   @Provide() empty: number[] = []
   @Prop({ default: () => [] }) tags!: myTypes.TagItem[]
   @Prop({ default: true }) hasAddBtn!: boolean
+  @Prop({ default: true }) tagVisiable!: boolean
   @Prop({ default: () => [] }) selected!: number[]
 
   onselected(id: number) {

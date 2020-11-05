@@ -17,14 +17,14 @@ import { Component, Prop, Provide, Vue, Watch } from 'vue-property-decorator';
 export default class MNote extends Vue {
   @Provide() value = ''
   @Prop({ default: "备注" }) title!: string
-  @Prop({ default: "备注" }) defaultValue!: string
+  @Prop({ default: "" }) defaultValue!: string
   @Prop({ default: "在这里填写备注" }) placeholder!: string
 
   onchange() {
     this.$emit('change', this.value)
   }
   mounted() {
-    this.value = this.defaultValue
+    this.value = this.defaultValue || ''
   }
 
 }

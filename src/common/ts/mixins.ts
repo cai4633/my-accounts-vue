@@ -1,3 +1,4 @@
+import { getAllTags } from "@/api/tags"
 import Vue from "vue"
 import Component from "vue-class-component"
 import { Provide } from "vue-property-decorator"
@@ -15,5 +16,17 @@ export class TagMixin extends Vue {
 
   get classify(): myTypes.TagItem[] {
     return classifyByCategory(this.allTags)[hash[this.category]]
+  }
+  
+  toggleBtn(value: TagMixin["category"]) {
+    this.category = value
+  }
+
+  mounted() {
+    if (!this.allTags.length) {
+      getAllTags().then((res) => {
+        this.setAllTags(res)
+      })
+    }
   }
 }

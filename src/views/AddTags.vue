@@ -4,6 +4,7 @@
       <m-header @ok='onok'>添加标签</m-header>
       <MTagsContainer
         :hasAddBtn='false'
+        :tagVisiable='false'
         :tags='classify'
         @selected='onselected'
         :selected="selected"
