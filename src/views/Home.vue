@@ -33,13 +33,14 @@ import MIcon from '@/base/m-icon.vue';
 import MLayout from '@/base/m-layout.vue';
 import dayjs from 'dayjs'
 import { getAllRecords } from '@/api/records'
-import { Component, Provide, Vue } from 'vue-property-decorator';
+import { Component, Mixins, Provide, Vue } from 'vue-property-decorator';
 import { findTags } from '@/common/ts/tags'
 import { getAllTags } from '@/api/tags'
 import MRecordItem from '@/components/m-record-item.vue'
 import { getDataToday } from '@/common/ts/detail'
 import { Mutation } from 'vuex-class';
 import { MutationMethod } from 'vuex';
+import { TagMixin, RecordMixin } from 'common/ts/mixins'
 @Component({
   components: {
     MLayout,
@@ -47,25 +48,13 @@ import { MutationMethod } from 'vuex';
     MRecordItem
   }
 })
-export default class Home extends Vue {
+export default class Home extends Mixins(RecordMixin, TagMixin) {
   @Provide() today = dayjs().format('YYYY年MM月DD日')
-  @Provide() allRecords: myTypes.RecordItem[] = []
-  @Provide() allTags: myTypes.TagItem[] = []
-  @Mutation("setAllTags") setAllTags!: MutationMethod
 
   get records() {
     return getDataToday(this.allRecords).records
   }
 
-  mounted() {
-    getAllRecords().then((response) => {
-      this.allRecords = response
-    })
-    getAllTags().then((res) => {
-      this.allTags = res
-      this.setAllTags(res)
-    })
-  }
 }
 </script>
 

@@ -7,7 +7,7 @@
         :key='tag.id'
         @click='onselected(tag.id)'
       >
-        <div :class="{'item':true, 'checked':selected.includes(tag.id)}">
+        <div :class="{'item':true, 'selected':selected.includes(tag.id), 'checked':checked === tag.id}">
           <m-icon :name="tag.icon"></m-icon>
           <span class="name">{{tag.name}}</span>
         </div>
@@ -45,8 +45,10 @@ export default class MTagsContainer extends Vue {
   @Prop({ default: true }) hasAddBtn!: boolean
   @Prop({ default: true }) tagVisiable!: boolean
   @Prop({ default: () => [] }) selected!: number[]
+  @Prop() checked!: number
 
   onselected(id: number) {
+
     this.$emit('selected', id)
   }
   gotoAddTags() {
@@ -100,11 +102,12 @@ export default class MTagsContainer extends Vue {
           background-color $theme.iconBackground
           border 1px solid transparent
 
-      .checked
+      .selected
         >>>svg.icon
           border 1px solid red
 
-      .selected
-        svg.icon
+      .checked
+        >>>svg.icon
           background-color $theme.bc
+          fill #fff
 </style>

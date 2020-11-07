@@ -6,8 +6,9 @@
     ></m-category-header>
     <MTagsContainer
       :hasAddBtn='false'
-      @selected='gotoTagItem'
+      @selected='onchecked'
       :tags='classify'
+      :checked='checked'
     ></MTagsContainer>
     <section
       v-if="padVisiable"
@@ -25,27 +26,51 @@ import MLayout from '@/base/m-layout.vue'
 import MTagsContainer from 'base/m-tags-container.vue'
 import MCategoryHeader from 'base/m-category-header.vue'
 import { Component, Mixins, Prop, Vue, Watch, Provide } from 'vue-property-decorator';
-import { TagMixin } from 'common/ts/mixins'
+import { TagMixin, RecordMixin } from 'common/ts/mixins'
 import MNote from 'base/m-note.vue'
 import MNumberpad from 'base/m-numberpad.vue'
+import { Toast } from 'mint-ui'
+import { addRecords } from 'api/records'
+import { createRecordId } from 'common/ts/util'
+import dayjs from 'dayjs';
 @Component({
   components: {
     MLayout, MTagsContainer, MCategoryHeader, MNote, MNumberpad
   }
 })
-export default class Money extends Mixins(TagMixin) {
-  @Provide() padVisiable: boolean = true
-  gotoTagItem(value: any) {
-    console.log(value);
+export default class Money extends Mixins(TagMixin, RecordMixin) {
+  @Provide() checked: number = -1
+  @Provide() padVisiable: boolean = false
+  @Provide() recordItem: myTypes.RecordItem = { id: 0, selected: [], category: '-', output: '', note: '', createAt: '' }
 
+  onchecked(value: number) {
+    this.checked = value
+    this.showpad()
   }
-  onaddtags() { }
+  showpad() {
+    this.padVisiable = true
+  }
+  hidepad() {
+    this.padVisiable = false
+  }
   onchange(note: string) {
-    console.log(note);
-
+    this.recordItem.note = note
   }
   onok(count: string) {
-    console.log(count);
+    if (parseFloat(count) === 0) {
+      Toast({
+        message: "您还未输入金额",
+        duration: 1000,
+      })
+      return
+    }
+    this.recordItem = Object.assign(this.recordItem, { selected: [this.checked], id: createRecordId(), output: count, createAt: dayjs().format("YYYY-MM-DD"), category: this.category })
+    addRecords([this.recordItem]).then((res) => {
+      if (Array.isArray(res)) {
+        this.setAllRecords([this.recordItem, ...this.allRecords])
+      }
+      this.$router.go(-1)
+    })
   }
 }
 </script>

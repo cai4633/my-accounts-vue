@@ -2,9 +2,9 @@ import { AV, Query } from "./index"
 
 // 向leancloud 添加记录
 function addRecords(data: myTypes.RecordItem[]) {
-  const Tags = AV.Object.extend("Records") //获取tags 类
+  const Records = AV.Object.extend("Records") //获取tags 类
   const objs = data.map((item) => {
-    const records = new Tags()
+    const records = new Records()
     const keys = Object.keys(item) as (keyof typeof item)[]
     keys.map((key) => {
       records.set(key, item[key]) //添加tags
@@ -12,7 +12,7 @@ function addRecords(data: myTypes.RecordItem[]) {
     return records
   })
 
-  AV.Object.saveAll(objs)
+  return AV.Object.saveAll(objs)
 }
 function updateRecord(data: myTypes.RecordItem): void {
   const array = ["output", "note"] as const
@@ -32,7 +32,7 @@ function deleteOne(data: myTypes.RecordItem) {
   })
 }
 
-// 获取leancloud标签
+// 获取leancloud记录
 function getAllRecords(): Promise<myTypes.RecordItem[]> {
   const query = new Query("Records")
   return query.find().then((todo: any) => todo.map((item: { attributes: myTypes.RecordItem }) => item.attributes))

@@ -79,10 +79,9 @@ import MLayout from '@/base/m-layout.vue'
 import { DatetimePicker } from 'mint-ui';
 import MRecordItem from '@/components/m-record-item.vue'
 import MIcon from '@/base/m-icon.vue'
-import { Component, Prop, Provide, Vue, Watch } from 'vue-property-decorator';
+import { Component, Mixins, Prop, Provide, Vue, Watch } from 'vue-property-decorator';
 import dayjs from 'dayjs';
-import { getAllRecords } from '@/api/records';
-import { getAllTags } from '@/api/tags';
+import { RecordMixin, TagMixin } from 'common/ts/mixins'
 import { orderByDate, settleAccountsByDay, recordsRankByMonth, isTotal } from "@/common/ts/detail"
 
 interface RecordsType {
@@ -98,25 +97,14 @@ interface RecordsType {
     DatetimePicker
   }
 })
-export default class Details extends Vue {
+export default class Details extends Mixins(RecordMixin, TagMixin) {
   @Provide() date: Date = new Date()
   @Provide() pickerValue: Date = new Date()
   @Provide() total: Pick<RecordsType, "income" | "outcome"> = { income: 0, outcome: 0 }
-  @Provide() allRecords: myTypes.RecordItem[] = []
-  @Provide() allTags: myTypes.TagItem[] = []
 
 
   $refs!: {
     picker: DatetimePicker
-  }
-
-  mounted() {
-    getAllRecords().then((response) => {
-      this.allRecords = response
-    })
-    getAllTags().then((res) => {
-      this.allTags = res
-    })
   }
 
   confirmPicker(value: Date) {
@@ -145,10 +133,6 @@ export default class Details extends Vue {
   }
 
 
-  @Watch('records')
-  recordsChange(val: any) {
-    console.log(val);
-  }
   showData(data: myTypes.RecordItem[]) {
     return settleAccountsByDay(data)
   }

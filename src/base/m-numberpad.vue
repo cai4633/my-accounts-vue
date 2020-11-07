@@ -1,7 +1,7 @@
 <template>
   <div class='m-numberpad'>
     <div class="value">
-      <input v-model="money" />
+      <input v-model="count" />
     </div>
     <div class="pad">
       <div
@@ -32,18 +32,18 @@ import { Component, Prop, Provide, Vue, Watch } from 'vue-property-decorator';
 import { isInputType, generateOutput } from 'common/ts/money'
 @Component
 export default class MNumberpad extends Vue {
-  @Provide() money = ''
+  @Provide() count = '0'
   onclick(e: MouseEvent) {
     const value = (e.target as HTMLDivElement).textContent
     if (!value) {
       return
     }
     if (value === "OK") {
-      this.$emit('ok', this.money)
+      this.$emit('ok', this.count)
       return
     }
     if (isInputType(value)) {
-      this.money = generateOutput(value, this.money)
+      this.count = generateOutput(value, this.count)
     }
   }
 }
