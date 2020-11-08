@@ -67,6 +67,8 @@ export default class MPicker extends Vue {
 </script>
 
 <style lang='stylus' scoped>
+@import '~common/stylus/variable.styl'
+
 .m-picker
   .mint-popup
     position absolute
@@ -74,4 +76,7 @@ export default class MPicker extends Vue {
 
     .picker-wrap
       width 100%
+
+  .mint-header
+    background-color ($theme.bc)
 </style>

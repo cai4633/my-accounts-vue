@@ -16,6 +16,7 @@ module.exports = {
   outputDir: "docs",
   assetsDir: "static",
   lintOnSave: true,
+  pluginOptions: {},
   chainWebpack: (config) => {
     config.resolve.alias
       .set("@", resolve("src"))
