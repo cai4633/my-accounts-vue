@@ -215,6 +215,9 @@ export default class Details extends Mixins(RecordMixin, TagMixin) {
       left 0px
       width 100%
 
+      >>>.picker-items .picker-slot-center:nth-child(3)
+        display none
+
       .mint-popup
         position absolute
 

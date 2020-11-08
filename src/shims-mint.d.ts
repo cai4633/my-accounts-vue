@@ -6,4 +6,10 @@ declare module "mint-ui" {
   }
   type MessageType = string | { message?: string; position?: string; duration?: number }
   export const Toast: (message?: MessageType) => void
+  export const Picker: any
+  export const Navbar: any
+  export const TabItem: any
+  export const Popup: any
+  export const Header: any
+  export const Button: any
 }

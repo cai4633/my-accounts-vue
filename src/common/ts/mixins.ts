@@ -41,9 +41,14 @@ export class RecordMixin extends Vue {
   @Mutation("setAllRecords") setAllRecords!: MutationMethod
 
   mounted() {
+    console.log(1)
+
     if (!this.allRecords.length) {
+      console.log(2)
+
       getAllRecords().then((res) => {
         this.setAllRecords(res)
+        console.log(3)
       })
     }
   }
