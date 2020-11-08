@@ -1,24 +1,32 @@
 <template>
-  <div class="money">
-    <m-category-header
-      :category="category"
-      @selected='toggleBtn'
-    ></m-category-header>
-    <MTagsContainer
-      :hasAddBtn='false'
-      @selected='onchecked'
-      :tags='classify'
-      :checked='checked'
-    ></MTagsContainer>
-    <section
-      v-if="padVisiable"
-      class="bottom"
-      ref='bottom'
-    >
-      <m-note @change='onchange'></m-note>
-      <m-numberpad @ok='onok'></m-numberpad>
-    </section>
-  </div>
+  <transition
+    name="slide"
+    appear
+    appear-class="slide-appear"
+    appear-to-class="slide-appear-to"
+    appear-active-class="slide-appear-active"
+  >
+    <div class="money">
+      <m-category-header
+        :category="category"
+        @selected='toggleBtn'
+      ></m-category-header>
+      <MTagsContainer
+        :hasAddBtn='false'
+        @selected='onchecked'
+        :tags='classify'
+        :checked='checked'
+      ></MTagsContainer>
+      <section
+        v-if="padVisiable"
+        class="bottom"
+        ref='bottom'
+      >
+        <m-note @change='onchange'></m-note>
+        <m-numberpad @ok='onok'></m-numberpad>
+      </section>
+    </div>
+  </transition>
 </template>
 
 <script lang='ts'>
@@ -86,4 +94,13 @@ export default class Money extends Mixins(TagMixin, RecordMixin) {
     width 100%
     bottom 0
     max-width $theme.maxWidth
+
+.slide-appear, .slide-leave-to
+  transform translateY(100%)
+
+.slide-appear-to, .slide-leave
+  transform translateY(0)
+
+.slide-appear-active, .slide-leave-active
+  transition all 0.2s linear
 </style>

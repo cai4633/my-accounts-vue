@@ -61,7 +61,7 @@ export default class Statistics extends Mixins(RecordMixin) {
   @Provide() selected = "0"
   @Provide() btnText = "支出"
   @Provide() popupVisible = false
-  @Provide() source: myTypes.WeekItem[] = []
+  @Provide() source: myTypes.WeekItem[] = [['周日', 0, 0]]
   @Provide() seriesPatch: PatchType = { name: '支出', encode: { x: 0, y: 2 } }
 
   get options() {
@@ -138,6 +138,10 @@ export default class Statistics extends Mixins(RecordMixin) {
     if (!oldVal.length) {
       this.source = getDataThisWeek(newVal)
     }
+  }
+
+  mounted() {
+    this.source = getDataThisWeek(this.allRecords)
   }
 
 }
