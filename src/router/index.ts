@@ -44,11 +44,15 @@ const routes: Array<RouteConfig> = [
       },
     ],
   },
-
   {
     path: "/details",
     name: "Details",
     component: () => import("../views/Details.vue"),
+  },
+  {
+    path: "*",
+    name: "NotFound",
+    component: () => import("../views/NotFound.vue"),
   },
 ]
 
