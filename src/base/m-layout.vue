@@ -46,7 +46,7 @@ export default class MLayout extends Vue { }
 
     .nav-wrap
       position fixed
-      z-index 1000
+      z-index ($zindex.nav)
       width 100%
       bottom 0px
       max-width ($theme.maxWidth)

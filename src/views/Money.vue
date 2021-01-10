@@ -47,8 +47,8 @@ import dayjs from 'dayjs';
   }
 })
 export default class Money extends Mixins(TagMixin, RecordMixin) {
-  @Provide() checked: number = -1
-  @Provide() padVisiable: boolean = false
+  @Provide() checked = -1
+  @Provide() padVisiable = false
   @Provide() recordItem: myTypes.RecordItem = { id: 0, selected: [], category: '-', output: '', note: '', createAt: '' }
 
   onchecked(value: number) {
