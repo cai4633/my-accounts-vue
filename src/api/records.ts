@@ -34,8 +34,14 @@ function deleteOne(data: myTypes.RecordItem) {
 
 // 获取leancloud记录
 function getAllRecords(): Promise<myTypes.RecordItem[]> {
+  // TODO 解决leancloud 查询限制1000条的问题
   const query = new Query("Records")
-  return query.find().then((todo: any) => todo.map((item: { attributes: myTypes.RecordItem }) => item.attributes))
+  return query
+    .limit(1000)
+    .find()
+    .then((todo: any) => {
+      return todo.map((item: { attributes: myTypes.RecordItem }) => item.attributes)
+    })
 }
 
 export { addRecords, getAllRecords, updateRecord, deleteOne }

@@ -1,11 +1,10 @@
 <template>
-  <transition
+  <!-- <transition
     name="slide"
     appear
-    appear-class="slide-appear"
-    appear-to-class="slide-appear-to"
-    appear-active-class="slide-appear-active"
-  >
+    mode="out-in"
+    duration='250'
+  > -->
     <div class="money">
       <m-category-header
         :category="category"
@@ -26,7 +25,7 @@
         <m-numberpad @ok='onok'></m-numberpad>
       </section>
     </div>
-  </transition>
+  <!-- </transition> -->
 </template>
 
 <script lang='ts'>

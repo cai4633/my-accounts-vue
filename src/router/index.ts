@@ -12,24 +12,28 @@ const routes: Array<RouteConfig> = [
   {
     path: "/home",
     name: "Home",
+    meta: { transition: false },
     component: () => import("../views/Home.vue"),
   },
 
   {
     path: "/money",
     name: "Money",
+    meta: { transition: true },
     component: () => import("../views/Money.vue"),
   },
 
   {
     path: "/statistics",
     name: "Statistics",
+    meta: { transition: false },
     component: () => import("../views/Statistics.vue"),
   },
 
   {
     path: "/tags",
     name: "Tags",
+    meta: { transition: false },
     component: () => import("../views/Tags.vue"),
     children: [
       {
@@ -47,11 +51,13 @@ const routes: Array<RouteConfig> = [
   {
     path: "/details",
     name: "Details",
+    meta: { transition: false },
     component: () => import("../views/Details.vue"),
   },
   {
     path: "*",
     name: "NotFound",
+    meta: { transition: false },
     component: () => import("../views/NotFound.vue"),
   },
 ]

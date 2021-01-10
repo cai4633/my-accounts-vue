@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <router-view />
+    <transition name="slide" mode="out-in">
+      <router-view   v-if="$route.meta.transition"/>
+    </transition>
+    <transition name="s" mode="out-in">
+      <router-view   v-if="!$route.meta.transition"/>
+    </transition>
   </div>
 </template>
 
@@ -15,4 +20,12 @@
   text-align center
   color #2c3e50
   margin-top 60px
+  .slide-enter, .slide-leave-to
+    transform translateY(100%)
+
+  .slide-enter-to, .slide-leave
+    transform translateY(0)
+
+  .slide-enter-active, .slide-leave-active
+    transition all 0.2s linear
 </style>

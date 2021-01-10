@@ -42,7 +42,7 @@ import MButton from 'base/m-button.vue'
 })
 export default class TagItem extends Vue {
   @Provide() tagname: string = ''
-  @Provide() id: number = window.parseInt(this.$route.params.id)
+  @Provide() id: number = parseInt(this.$route.params.id)
   @Getter("allTags") allTags!: myTypes.TagItem[]
   @Mutation('setAllTags') setAllTags !: MutationMethod
 

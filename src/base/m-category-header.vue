@@ -72,4 +72,5 @@ export default class MCategoryHeader extends Vue {
     position absolute
     right 20px
     font-size 12px
+    cursor pointer
 </style>
